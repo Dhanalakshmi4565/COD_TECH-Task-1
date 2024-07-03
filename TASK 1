@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGrades {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Double> grades = new ArrayList<>();
+
+        System.out.println("Enter grades for different subjects (type 'done' to finish):");
+
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            try {
+                double grade = Double.parseDouble(input);
+                if (grade >= 0 && grade <= 100) {
+                    grades.add(grade);
+                } else {
+                    System.out.println("Please enter a grade between 0 and 100.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric grade or 'done' to finish.");
+            }
+        }
+
+        if (grades.size() > 0) {
+            double average = calculateAverage(grades);
+            String letterGrade = getLetterGrade(average);
+            double gpa = convertToGPA(average);
+
+            System.out.println("Average Grade: " + average);
+            System.out.println("Letter Grade: " + letterGrade);
+            System.out.println("GPA: " + gpa);
+        } else {
+            System.out.println("No grades entered.");
+        }
+
+        scanner.close();
+    }
+
+    public static double calculateAverage(ArrayList<Double> grades) {
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    public static String getLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    public static double convertToGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+}
